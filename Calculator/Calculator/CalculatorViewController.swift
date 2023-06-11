@@ -68,8 +68,8 @@ extension CalculatorViewController {
             clearFormula()
         }
         
-        guard isOverMaximumDigits(currentOperand, insertedNumber) == false,
-              isOverMaximumPointDigits(currentOperand, insertedNumber) == false else { return }
+        guard checkOverMaximumDigits(currentOperand, insertedNumber) == false,
+              checkOverMaximumPointDigits(currentOperand, insertedNumber) == false else { return }
         
         currentOperandLabel.text = setUpOperandLabelText(currentOperand, insertedNumber)
     }
@@ -124,14 +124,14 @@ extension CalculatorViewController {
         return isDecimalPointNumber ? "\(operand)" : "\(Int(operand))"
     }
     
-    private func isOverMaximumDigits(_ currentOperand: String, _ insertedNumber: String) -> Bool {
+    private func checkOverMaximumDigits(_ currentOperand: String, _ insertedNumber: String) -> Bool {
         let operand = currentOperand.replacingOccurrences(of: ".", with: "")
         let appendedOperandCount = (operand + insertedNumber).count
         
         return appendedOperandCount > maximumOperandDigits
     }
     
-    private func isOverMaximumPointDigits(_ currentOperand: String, _ insertedNumber: String) -> Bool {
+    private func checkOverMaximumPointDigits(_ currentOperand: String, _ insertedNumber: String) -> Bool {
         guard currentOperand.contains(".") else { return false }
         guard let pointNumber = currentOperand.components(separatedBy: ".").last else { return false }
         
