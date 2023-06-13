@@ -81,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				5B5BED2C2A31C634003AA371 /* ArithmeticStackView.swift */,
+				C713D9472570E5EB001C3AFC /* Main.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -101,6 +102,37 @@
 				5B5BED2A2A30621D003AA371 /* UIScrollView +.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		5BED9CF92A38707500C319A3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5BE5F2D22A25E9A600E57B9D /* CalculatorItemQueue.swift */,
+				5BE5F2E52A28A3FC00E57B9D /* Item.swift */,
+				5BE5F3022A29CC0600E57B9D /* Operator.swift */,
+				5BE5F3042A29CE2900E57B9D /* Formula.swift */,
+				5BE5F3062A29CF1900E57B9D /* ExpressionParser.swift */,
+				5B8CD68C2A30377B00CE80A5 /* Menus.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5BED9CFA2A38709100C319A3 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				C713D9412570E5EB001C3AFC /* AppDelegate.swift */,
+				C713D9432570E5EB001C3AFC /* SceneDelegate.swift */,
+				C713D94C2570E5ED001C3AFC /* LaunchScreen.storyboard */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		5BED9CFB2A3870A100C319A3 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C713D9452570E5EB001C3AFC /* CalculatorViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		C713D9352570E5EB001C3AFC = {
@@ -124,21 +156,13 @@
 		C713D9402570E5EB001C3AFC /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				5BED9CFA2A38709100C319A3 /* App */,
+				5BED9CFB2A3870A100C319A3 /* ViewController */,
 				5B5BED2E2A31C813003AA371 /* View */,
+				5BED9CF92A38707500C319A3 /* Model */,
 				5BE5F2E22A2739B300E57B9D /* Extension */,
-				C713D9412570E5EB001C3AFC /* AppDelegate.swift */,
-				C713D9432570E5EB001C3AFC /* SceneDelegate.swift */,
-				C713D9452570E5EB001C3AFC /* CalculatorViewController.swift */,
-				C713D9472570E5EB001C3AFC /* Main.storyboard */,
 				C713D94A2570E5ED001C3AFC /* Assets.xcassets */,
-				C713D94C2570E5ED001C3AFC /* LaunchScreen.storyboard */,
 				C713D94F2570E5ED001C3AFC /* Info.plist */,
-				5BE5F2D22A25E9A600E57B9D /* CalculatorItemQueue.swift */,
-				5BE5F2E52A28A3FC00E57B9D /* Item.swift */,
-				5BE5F3022A29CC0600E57B9D /* Operator.swift */,
-				5BE5F3042A29CE2900E57B9D /* Formula.swift */,
-				5BE5F3062A29CF1900E57B9D /* ExpressionParser.swift */,
-				5B8CD68C2A30377B00CE80A5 /* Menus.swift */,
 			);
 			path = Calculator;
 			sourceTree = "<group>";
