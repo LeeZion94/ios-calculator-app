@@ -19,6 +19,7 @@ final class CalculatorViewController: UIViewController {
     private let initialNumber = 0
     private let maximumPointDigits = 5
     private let maximumOperandDigits = 20
+    private lazy var operandFormatter = OperandFormatter(numberFormatter)
     private var isFirstArithmeticFormula: Bool {
         return calculationFormulaStackView.subviews.count == 0
     }
@@ -68,10 +69,9 @@ extension CalculatorViewController {
             clearFormula()
         }
         
-        guard checkOverMaximumDigits(currentOperand, insertedNumber) == false,
-              checkOverMaximumPointDigits(currentOperand, insertedNumber) == false else { return }
+        guard let operandText = operandFormatter.setUpChangedOperandText(currentOperand, insertedNumber) else { return }
         
-        currentOperandLabel.text = setUpOperandLabelText(currentOperand, insertedNumber)
+        currentOperandLabel.text = operandText
     }
     
     @IBAction func didTappedMenus(_ sender: UIButton) {
@@ -123,59 +123,12 @@ extension CalculatorViewController {
         
         return isDecimalPointNumber ? "\(operand)" : "\(Int(operand))"
     }
-    
-    private func checkOverMaximumDigits(_ currentOperand: String, _ insertedNumber: String) -> Bool {
-        let operand = currentOperand.replacingOccurrences(of: ".", with: "")
-        let appendedOperandCount = (operand + insertedNumber).count
-        
-        return appendedOperandCount > maximumOperandDigits
-    }
-    
-    private func checkOverMaximumPointDigits(_ currentOperand: String, _ insertedNumber: String) -> Bool {
-        guard currentOperand.contains(".") else { return false }
-        guard let pointNumber = currentOperand.components(separatedBy: ".").last else { return false }
-        
-        let appendedPointNumber = (pointNumber + insertedNumber).count
-        
-        return appendedPointNumber > maximumPointDigits
-    }
-    
-    private func setUpOperandLabelText(_ currentOperand: String, _ insertedNumber: String) -> String? {
-        let isSubstitutionOperand = (Int(currentOperand) == initialNumber) && (insertedNumber != ".")
-        
-        if isSubstitutionOperand {
-            return "\(Int(insertedNumber) ?? initialNumber)"
-        }
-        
-        if insertedNumber == "." {
-            let operandAsFormatter = convertToFormatterString(string: currentOperand)
-            
-            return currentOperand.contains(".") ? operandAsFormatter : operandAsFormatter + "."
-        }
-        
-        if currentOperand.contains(".") && Double(insertedNumber) == 0.0 {
-            let operand = currentOperand.components(separatedBy: ".")
-            let operandAsFormatter = convertToFormatterString(string: operand.first ?? "")
-            let operandPointNumber = operand.last ?? ""
-            
-            return operandAsFormatter + "." + operandPointNumber + insertedNumber
-        }
-        
-        return convertToFormatterString(string: currentOperand + insertedNumber)
-    }
-    
+
     private func clearFormula() {
         clearCalculationFormulaStackView()
         inputFormula = ""
         currentOperatorLabel.text = ""
         calculateButton.isEnabled = false
-    }
-    
-    private func convertToFormatterString(string: String) -> String {
-        let formatterNumber = numberFormatter.number(from: string) ?? initialNumber as NSNumber
-        let formatterString = numberFormatter.string(from: formatterNumber) ?? ""
-        
-        return formatterString
     }
 }
 
@@ -183,7 +136,7 @@ extension CalculatorViewController {
 extension CalculatorViewController {
     private func addArithmetic() {
         let operand = makeRefinementOperand()
-        let operndAsFormatterString = convertToFormatterString(string: operand ?? "")
+        let operndAsFormatterString = numberFormatter.convertToFormatterString(string: operand ?? "")
         
         addFormulaStackView(operndAsFormatterString)
         addInputFormula(operand)
