@@ -70,7 +70,7 @@ extension CalculatorViewController {
             clearFormula()
         }
         
-        guard let operandText = operandFormatter.setUpChangedOperandText(currentOperand, insertedNumber) else { return }
+        guard let operandText = operandFormatter.setUpInputOperandText(currentOperand, insertedNumber) else { return }
         
         currentOperandLabel.text = operandText
     }
@@ -116,14 +116,6 @@ extension CalculatorViewController {
         inputFormula += currentOperatorLabel.text ?? ""
         inputFormula += currentOperandString ?? ""
     }
-    
-    private func makeRefinementOperand() -> String? {
-        guard let currentOperandString = currentOperandLabel.text?.replacingOccurrences(of: ",", with: ""), let operand = Double(currentOperandString) else { return nil }
-        
-        let isDecimalPointNumber = operand != floor(operand)
-        
-        return isDecimalPointNumber ? "\(operand)" : "\(Int(operand))"
-    }
 
     private func clearFormula() {
         clearCalculationFormulaStackView()
@@ -136,7 +128,7 @@ extension CalculatorViewController {
 // MARK: - UI Method
 extension CalculatorViewController {
     private func addArithmetic() {
-        let operand = makeRefinementOperand()
+        let operand = operandFormatter.makeRefinementArithmeticOperand(currentOperandLabel.text)
         let operndAsFormatterString = numberFormatter.convertToFormatterString(string: operand ?? "")
         
         addFormulaStackView(operndAsFormatterString)

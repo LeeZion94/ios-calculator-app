@@ -14,14 +14,25 @@ struct OperandFormatter {
         self.numberFormatter = numberFormatter
     }
     
-    func setUpChangedOperandText(_ currentOperand: String, _ insertedNumber: String) -> String? {
+    func setUpInputOperandText(_ currentOperand: String, _ insertedNumber: String) -> String? {
         guard checkOverMaximumDigits(currentOperand, insertedNumber) == false,
               checkOverMaximumPointDigits(currentOperand, insertedNumber) == false else { return nil }
         
-        return setUpOperandFormatText(currentOperand, insertedNumber)
+        return setUpChangedOperandFormat(currentOperand, insertedNumber)
     }
     
-    private func setUpOperandFormatText(_ currentOperand: String, _ insertedNumber: String) -> String? {
+    func makeRefinementArithmeticOperand(_ currentOperandLabelText: String?) -> String? {
+        guard let currentOperandString = currentOperandLabelText?.replacingOccurrences(of: ",", with: ""), let operand = Double(currentOperandString) else { return nil }
+        
+        let isDecimalPointNumber = operand != floor(operand)
+        
+        return isDecimalPointNumber ? "\(operand)" : "\(Int(operand))"
+    }
+}
+
+// MARK: - setUpInpuOperandText
+extension OperandFormatter {
+    private func setUpChangedOperandFormat(_ currentOperand: String, _ insertedNumber: String) -> String? {
         let isSubstitutionOperand = (Int(currentOperand) == initialNumber) && (insertedNumber != ".")
         
         if isSubstitutionOperand {
