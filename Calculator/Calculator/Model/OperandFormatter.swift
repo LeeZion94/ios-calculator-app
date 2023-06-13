@@ -8,9 +8,6 @@
 import Foundation
 
 struct OperandFormatter {
-    private let initialNumber = 0
-    private let maximumPointDigits = 5
-    private let maximumOperandDigits = 20
     private let numberFormatter: NumberFormatter
     
     init(_ numberFormatter: NumberFormatter) {

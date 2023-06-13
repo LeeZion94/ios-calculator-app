@@ -6,6 +6,10 @@
 
 import UIKit
 
+let initialNumber = 0
+let maximumPointDigits = 5
+let maximumOperandDigits = 20
+
 final class CalculatorViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var currentOperatorLabel: UILabel!
@@ -16,9 +20,6 @@ final class CalculatorViewController: UIViewController {
     private let numberFormatter = NumberFormatter()
     private var isPrevResult = false
     private var inputFormula = ""
-    private let initialNumber = 0
-    private let maximumPointDigits = 5
-    private let maximumOperandDigits = 20
     private lazy var operandFormatter = OperandFormatter(numberFormatter)
     private var isFirstArithmeticFormula: Bool {
         return calculationFormulaStackView.subviews.count == 0
